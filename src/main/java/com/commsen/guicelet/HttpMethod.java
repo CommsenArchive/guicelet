@@ -8,8 +8,4 @@ public enum HttpMethod {
 	POST, 
 	PUT,
 	TRACE;
-	
-	public static HttpMethod[] BROWSER_SUPPORTED = new HttpMethod[] {GET, POST};
-	
-	public static HttpMethod[] ALL = values();
 }

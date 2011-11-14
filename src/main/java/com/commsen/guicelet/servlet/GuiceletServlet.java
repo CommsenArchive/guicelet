@@ -120,7 +120,6 @@ public class GuiceletServlet extends HttpServlet {
 	private void extractMethods(Object guicelet) {
 		List<Method> methods = Arrays.asList(guicelet.getClass().getDeclaredMethods());
 		for (Method method : methods) {
-			System.out.println(Arrays.toString(method.getAnnotations()));
 			GuiceletRequest requestAnnotation = method
 					.getAnnotation(GuiceletRequest.class);
 			if (requestAnnotation == null) {
