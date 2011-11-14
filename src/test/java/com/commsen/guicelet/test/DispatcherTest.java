@@ -12,46 +12,34 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpHead;
-import org.apache.http.client.methods.HttpOptions;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.http.client.methods.HttpTrace;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.eclipse.jetty.server.Server;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.commsen.guicelet.GuiceletModule;
 import com.commsen.guicelet.test.guicelets.SimpleGuicelet;
-import com.google.inject.Module;
+import com.commsen.guicelet.test.util.JettyServer;
+import com.commsen.guicelet.test.util.TestContext;
 
 public class DispatcherTest {
 
-
-	private static final String ECHO = "ECHO";
+	private static final String ECHO = "ECHO\n";
 
 	@BeforeClass
-	public static void setUp() throws Exception {
-//		Module module = new GuiceletModule() {
-//			@Override
-//			protected void configureGuicelets() {
-//				bindGuiceletsTo("/g/");
-//				addGuicelet(SimpleGuicelet.class);
-//			}
-//		};
-		
+	public static void setUpBeforeClass() throws Exception {		
 		TestContext.addRoot("/g/");
 		TestContext.addGuicelet(SimpleGuicelet.class);
-		TestServer.start();
+		JettyServer.start();
+		
 	}
 
 	@AfterClass
-	public static void tearDown() throws Exception {
-		TestServer.stop();
+	public static void tearDownAfterClass() throws Exception {
+		JettyServer.stop();
 	}
 
 	
@@ -61,7 +49,7 @@ public class DispatcherTest {
 		
 		HttpClient httpclient = new DefaultHttpClient();
 
-		String url = TestServer.getHost() + "/g/test";
+		String url = JettyServer.getHost() + "/g/echo";
 //		testRequest(httpclient, new HttpDelete(url));
 		testRequest(httpclient, new HttpGet(url));
 //		testRequest(httpclient, new HttpHead(url));

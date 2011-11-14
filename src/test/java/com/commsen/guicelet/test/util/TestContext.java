@@ -1,4 +1,4 @@
-package com.commsen.guicelet.test;
+package com.commsen.guicelet.test.util;
 
 import java.util.ArrayList;
 import java.util.List;

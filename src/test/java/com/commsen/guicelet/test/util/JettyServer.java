@@ -1,15 +1,15 @@
-package com.commsen.guicelet.test;
+package com.commsen.guicelet.test.util;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.webapp.WebAppContext;
 
-public class TestServer {
+public class JettyServer {
 	
 	private static Server server;
 	private static int PORT = 9090;
 
 	public static String getHost() {
-		return "http://localhost:" + PORT + "/";
+		return "http://localhost:" + PORT ;
 	}
 
 	public static void start() throws Exception {

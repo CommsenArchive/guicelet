@@ -16,7 +16,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</filter-mapping>
 	
 	<listener>
-		<listener-class>com.commsen.guicelet.test.GuiceletTestContextListener</listener-class>
+		<listener-class>com.commsen.guicelet.test.util.GuiceletTestContextListener</listener-class>
 	</listener>
 
 

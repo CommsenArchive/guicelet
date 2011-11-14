@@ -8,30 +8,31 @@ import javax.servlet.http.HttpServletResponse;
 import com.commsen.guicelet.Guicelet;
 import com.commsen.guicelet.GuiceletRequest;
 import com.commsen.guicelet.HttpMethod;
-import com.google.inject.Singleton;
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
 
 @Guicelet
-@Singleton
 public class SimpleGuicelet {
+	
 
-	@GuiceletRequest(path="/echo", methods=HttpMethod.ALL)
+	@GuiceletRequest(path="/echo", methods={HttpMethod.GET, HttpMethod.POST, HttpMethod.HEAD})
 	public void echo(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		response.getWriter().println("ECHO");
+		response.getWriter().print("ECHO");
 	}
 
 	@GuiceletRequest(path="/test", methods={HttpMethod.GET})
 	public void sayHelloGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		response.getWriter().println("GET");
+		response.getWriter().print("GET");
 	}
 
 	@GuiceletRequest(path="/test", methods={HttpMethod.POST})
 	public void sayHelloPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		response.getWriter().println("POST");
+		response.getWriter().print("POST");
 	}
 
 	@GuiceletRequest(path="/test", methods={HttpMethod.POST})
 	public void a
 	(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		response.getWriter().println("POST");
+		response.getWriter().print("POST");
 	}
 }
