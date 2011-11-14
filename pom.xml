@@ -46,4 +46,7 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	<scm>
+		<developerConnection>scm:git:file:////data/projects/COMMSEN/java/guicelet/.git</developerConnection>
+	</scm>
 </project>
