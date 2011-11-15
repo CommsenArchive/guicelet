@@ -46,7 +46,12 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	<inceptionYear>2011</inceptionYear>
+	<organization>
+		<name>COMMSEN International</name>
+		<url>http://commsen.com</url>
+	</organization>
 	<scm>
-		<developerConnection>scm:git:file:////data/projects/COMMSEN/java/guicelet/.git</developerConnection>
+		<developerConnection>scm:git:file:///data/gitpublic/guicelet.git</developerConnection>
 	</scm>
 </project>
