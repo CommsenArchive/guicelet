@@ -31,6 +31,7 @@ public class TestContext {
 		TestContext.guicelets = guicelets;
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public static void addGuicelet(Class guicelet) {
 		TestContext.guicelets.add(guicelet);
 	}

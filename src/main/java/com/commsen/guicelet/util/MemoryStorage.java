@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class MemoryStorage {
 
+	@SuppressWarnings("unchecked")
 	public static <T> T getOrCreate (HttpServletRequest req, Class<T> clazz) {
 		String key = clazz.getName();
 		Object o = req.getAttribute(key); 
@@ -27,6 +28,7 @@ public class MemoryStorage {
 	}
 
 	
+	@SuppressWarnings("unchecked")
 	public static <T> T get (HttpServletRequest req, Class<T> clazz) {
 		String key = clazz.getName();
 		Object o = req.getAttribute(key); 
