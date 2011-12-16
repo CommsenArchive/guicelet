@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.commsen.guicelet.template.Constants;
 import com.google.inject.Singleton;
 
@@ -22,6 +25,7 @@ public class TemplateServlet extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	private Logger log = LoggerFactory.getLogger(TemplateServlet.class);
 
 	private Map<String, String> templates = new HashMap<String, String>();
 	private String jspFolder = "/WEB-INF/jsp";
@@ -33,40 +37,64 @@ public class TemplateServlet extends HttpServlet {
 		if (jspDir != null) {
 			jspDir = jspDir.trim();
 			if (jspDir.isEmpty()) {
-				// TODO print warning
-				System.err.println("MISSING FODER FOR JSP PAGES!!!");
+				if (log.isWarnEnabled()) {
+					log.warn("Init parameter " + Constants.PARAM_JSP_FOLDER + " is empty! Using the default JSP folder: " + jspFolder);
+				}
 			} else { 
 				if (folderExists(getServletContext().getRealPath(jspDir))) {
 					this.jspFolder = jspDir;
 				} else {
-					// TODO warn ("Folder " + jspFolder + " does not exists!");
-					System.err.println("FODER " + jspDir + " DOES NOT EXISTS!!! USING DEFAULT " + jspFolder);
+					if (log.isWarnEnabled()) {
+						log.warn("Folder " + jspDir + " does not exists! Using the default JSP folder: " + jspFolder);
+					}
 				}
 			}
+		} else {
+			if (log.isInfoEnabled()) {
+				log.info("Init parameter " + Constants.PARAM_JSP_FOLDER + " not provided! Using the default JSP folder: " + jspFolder);
+			}
+			
 		}
 		
 		String template = getServletConfig().getInitParameter(Constants.PARAM_TEMPLATE);
 		if (template != null) {
 			template = template.trim();
 			if (template.isEmpty()) {
-				// TODO print warning
-			} else {
-		 		if (fileExists(getServletContext().getRealPath(template))) {
-					this.jspTemplate = template;
-		 		} else {
-					// TODO warn ("template " + template + " does not exists!");
+				template = this.jspTemplate;
+				if (log.isWarnEnabled()) {
+					log.warn("Init parameter " + Constants.PARAM_TEMPLATE + " is empty! Using the default template name: " + jspTemplate);
 				}
 			}
+		} else {
+			template = this.jspTemplate;
+			if (log.isInfoEnabled()) {
+				log.info("Init parameter " + Constants.PARAM_TEMPLATE + " not provided! Using the default template name: " + jspTemplate);
+			}
+			
 		}
-		
+
+ 		if (fileExists(getServletContext().getRealPath(template))) {
+			this.jspTemplate = template;
+ 		} else {
+			if (log.isErrorEnabled()) {
+				log.error("File " + jspTemplate + " does not exists! " );
+			}
+		}
+
 		
 		@SuppressWarnings("unchecked")
 		Enumeration<String> names = getServletConfig().getInitParameterNames();
 		while (names.hasMoreElements()) {
 			String param = names.nextElement();
-			System.out.println("param: " + param);
+			String paramName;
+			String paramValue;
 			if (param.startsWith(Constants.PARAM_TEMPLATE_PREFIX)) {
-				templates.put(param.substring(Constants.PARAM_TEMPLATE_PREFIX.length()), getServletConfig().getInitParameter(param));
+				paramName = param.substring(Constants.PARAM_TEMPLATE_PREFIX.length());
+				paramValue = getServletConfig().getInitParameter(param);
+				templates.put(paramName, paramValue);
+				if (log.isDebugEnabled()) {
+					log.debug("Param " + paramName + " set to " + paramValue + " !" );
+				}
 			}
 		}
 
