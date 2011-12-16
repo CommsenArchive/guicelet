@@ -51,10 +51,12 @@ public class DispatcherTest extends BaseGuiceletTest {
 		testRequest(new HttpGet(JettyServer.getHost() + "/g/test"), HttpServletResponse.SC_OK, SimpleGuicelet.TEST);
 		testRequest(new HttpGet(JettyServer.getHost() + "/g/test/"), HttpServletResponse.SC_NOT_FOUND);
 
-		// test second level mapping
+		// test multi-level mapping
 		testRequest(new HttpGet(JettyServer.getHost() + "/g/test/test2"), HttpServletResponse.SC_OK, SimpleGuicelet.TEST2);
+		testRequest(new HttpGet(JettyServer.getHost() + "/g/test/test/test3"), HttpServletResponse.SC_OK, SimpleGuicelet.TEST3);
+		testRequest(new HttpGet(JettyServer.getHost() + "/g/test/test"), HttpServletResponse.SC_NOT_FOUND);
 		
-		// test not found 
+		// make sure there is 404 for methods other than GET
 		url = JettyServer.getHost() + "/g/test";
 		testRequest(new HttpDelete(url), HttpServletResponse.SC_NOT_FOUND);
 		testRequest(new HttpHead(url), HttpServletResponse.SC_NOT_FOUND);

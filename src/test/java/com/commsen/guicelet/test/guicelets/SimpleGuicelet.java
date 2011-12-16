@@ -15,6 +15,7 @@ public class SimpleGuicelet {
 	public static final String ECHO = "ECHO";
 	public static final String TEST = "TEST";
 	public static final String TEST2 = "TEST2";
+	public static final String TEST3 = "TEST3";
 
 	@GuiceletRequest(path="/echo", methods={DELETE, GET, HEAD, OPTIONS, POST, PUT, TRACE})
 	public void echo(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -27,8 +28,13 @@ public class SimpleGuicelet {
 	}
 
 	@GuiceletRequest(path="/test/test2", methods={GET})
-	public void sayHelloPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void secondLevel(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		response.getWriter().print(TEST2);
+	}
+
+	@GuiceletRequest(path="/test/test/test3", methods={GET})
+	public void thirdLevel(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		response.getWriter().print(TEST3);
 	}
 
 }
