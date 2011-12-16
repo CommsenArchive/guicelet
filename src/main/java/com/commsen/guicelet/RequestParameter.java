@@ -8,6 +8,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface RequestParameter {
-	String name();
+	String name() default "";
 	boolean required() default false;
 }

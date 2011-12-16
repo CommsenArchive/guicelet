@@ -13,10 +13,14 @@ public class TestBean extends RequestBean{
 	@RequestParameter(name="long")
 	private Long l;
 	
-	public String getTest() {
-		return "new" + request.getParameter("test");
-	}
+	@RequestParameter
+	private Integer number;
+
 	
+	public Integer getNumber() {
+		return number;
+	}
+
 	public String getS() {
 		return s;
 	}

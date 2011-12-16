@@ -24,7 +24,7 @@ public class GuiceletWithModel {
 		if (testBean.hasErrors()) {
 			result = testBean.getErrors().toString();
 		} else {
-			result = testBean.getL() + "," + testBean.getS();
+			result = testBean.getL() + "," + testBean.getS() + "," + testBean.getNumber();
 		}
 		response.getWriter().print(result);
 	}

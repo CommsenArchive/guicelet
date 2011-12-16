@@ -7,7 +7,6 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.converters.BigDecimalConverter;
 import org.apache.commons.beanutils.converters.BigIntegerConverter;
@@ -64,6 +63,9 @@ public class RequestBeanProvider implements Provider<RequestBean> {
 				continue;
 			}
 			String parameterName = requestParameterAnnotation.name();
+			if (parameterName.trim().isEmpty()) {
+				parameterName = field.getName();
+			}
 			String parameterValue = t.request.getParameter(parameterName);
  
 			if (parameterValue == null) {
