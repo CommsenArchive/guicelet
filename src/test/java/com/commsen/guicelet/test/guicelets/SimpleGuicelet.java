@@ -26,7 +26,7 @@ public class SimpleGuicelet {
 		response.getWriter().print(TEST);
 	}
 
-	@GuiceletRequest(path="/test/test2", methods={POST})
+	@GuiceletRequest(path="/test/test2", methods={GET})
 	public void sayHelloPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		response.getWriter().print(TEST2);
 	}

@@ -32,15 +32,17 @@ public class ModelTest extends BaseGuiceletTest {
 	@Test
 	public void test() throws Exception {
 
-		HttpClient httpclient = new DefaultHttpClient();
+		
+		String url;
+		for (int i = 0; i < 10; i++) {
+			url = JettyServer.getHost() + "/g/model?long=" + i + "&string=test" + i + "&number=" + i;
+			testRequest(new HttpGet(url), HttpServletResponse.SC_OK, i + ",test" + i + "," + i);
+		}
 
-		// test all methods
-		String url = JettyServer.getHost() + "/g/model?long=123&string=test";
-		testRequest(httpclient, new HttpGet(url), HttpServletResponse.SC_OK, "123,test");
 		url = JettyServer.getHost() + "/g/model?long=1a23&string=test";
-		testRequest(httpclient, new HttpGet(url), HttpServletResponse.SC_OK, "{l=[ERROR_CONVERTING_VALUE]}");
+		testRequest(new HttpGet(url), HttpServletResponse.SC_OK, "{l=[ERROR_CONVERTING_VALUE]}");
 		url = JettyServer.getHost() + "/g/model?long=123";
-		testRequest(httpclient, new HttpGet(url), HttpServletResponse.SC_OK, "{s=[MISSING_REQUIRED_FIELD]}");
+		testRequest(new HttpGet(url), HttpServletResponse.SC_OK, "{s=[MISSING_REQUIRED_FIELD]}");
 	}
 
 

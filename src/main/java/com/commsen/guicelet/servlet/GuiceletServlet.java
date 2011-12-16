@@ -169,6 +169,9 @@ public class GuiceletServlet extends HttpServlet {
 		case PUT:
 			putMethods.put(path, method);
 			break;
+		case TRACE:
+			traceMethods.put(path, method);
+			break;
 		default:
 			break;
 		}

@@ -9,8 +9,8 @@ import junit.framework.Assert;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 public abstract class BaseGuiceletTest {
 
@@ -18,18 +18,20 @@ public abstract class BaseGuiceletTest {
 		super();
 	}
 
-	protected void testRequest(HttpClient httpclient, HttpRequestBase httpRequest, int expectedCode) throws ClientProtocolException, IOException {
-		testRequest(httpclient, httpRequest, expectedCode, null);
+	protected void testRequest(HttpRequestBase httpRequest, int expectedCode) throws ClientProtocolException, IOException {
+		testRequest(httpRequest, expectedCode, null);
 	}
 
-	protected void testRequest(HttpClient httpclient, HttpRequestBase httpRequest, int expectedCode, String expectedResponse) throws IOException, ClientProtocolException {
+	protected void testRequest(HttpRequestBase httpRequest, int expectedCode, String expectedResponse) throws IOException, ClientProtocolException {
+		DefaultHttpClient httpclient = new DefaultHttpClient();
 		HttpResponse response = httpclient.execute(httpRequest);
 		Assert.assertEquals(expectedCode, response.getStatusLine().getStatusCode());
-		String method = httpRequest.getMethod();
-		if (expectedResponse != null && ("GET".equals(method) || "POST".equals(method))) {
-			Assert.assertNotNull(response.getEntity());
-			Assert.assertEquals(expectedResponse, getResponse(response.getEntity()));
+		HttpEntity entity = response.getEntity();
+		if (expectedResponse != null) {
+			Assert.assertNotNull(entity);
+			Assert.assertEquals(expectedResponse, getResponse(entity));
 		}
+		
 	}
 
 	private String getResponse(HttpEntity entity) throws IOException {
